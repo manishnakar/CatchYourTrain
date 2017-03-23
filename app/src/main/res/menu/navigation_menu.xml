@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Nav_settings"
+        android:title="Settings"/>
+    <item android:id="@+id/Nav_back"
+        android:title="Back"/>
+    <item android:id="@+id/Nav_Facebook"
+        android:title="Facebook"/>
+    <item android:id="@+id/Nav_Twitter"
+        android:title="Twitter"/>
+</menu>
