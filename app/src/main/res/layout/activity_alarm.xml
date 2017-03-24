@@ -7,60 +7,98 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#aad3e0fc"
     tools:context="com.example.sushantoberoi.catchyourtrain.alarm">
+
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set Automatic Alarm here"
+        android:padding="10dp"
+        android:textSize="25sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:text="Set Automatic Alarm"
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
          />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter the Destination station"
-        android:id="@+id/textView4"
+        android:layout_height="200dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/border1"
         android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp" />
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/trainNum"
-        android:hint="Enter train number"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp" />
+        android:id="@+id/relat1"
+        android:padding="10dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter the Destination Station"
-        android:id="@+id/destStation"
-        android:layout_below="@+id/trainNum"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="62dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Enter the Destination station"
+            android:id="@+id/textView4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp" />
 
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Destination Station"
+            android:id="@+id/destStation"
+            android:background="@drawable/border"
+            android:padding="10dp"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Enter destination station"
+            android:id="@+id/textView5"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/destStation"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/trainNum"
+            android:background="@drawable/border"
+            android:hint="Train number"
+            android:padding="10dp"
+            android:layout_below="@+id/textView5"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp" />
+
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/date"
-        android:hint="Enter train date"
+        android:hint="Date"
+        android:layout_below="@+id/relat1"
+        android:background="@drawable/border"
+        android:padding="10dp"
+        android:layout_marginTop="70dp"
         android:layout_centerVertical="true"
        />
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Set Alarm"
+        android:padding="10dp"
+        android:layout_below="@+id/date"
+        android:layout_marginTop="10dp"
         android:id="@+id/alarmbtn"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="106dp" />
+        android:background="@drawable/roundedcorners"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

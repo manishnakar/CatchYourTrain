@@ -31,12 +31,8 @@ public class SpotTrain extends android.support.v4.app.Fragment {
         t2=(AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView2);
         t3=(AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView3);
         t4=(AutoCompleteTextView)v.findViewById(R.id.autoCompleteTextView4);
-
-        //adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array_name);
-        //t1.setAdapter(adapter);
-        //t2.setAdapter(adapter);
-        //t3.setAdapter(adapter);
-        //t4.setAdapter(adapter);
+        t1.setAdapter(new PlacesAutoCompleteAdapter(getActivity(),R.layout.autocomplete_list_item));
+        t2.setAdapter(new PlacesAutoCompleteAdapter(getActivity(),R.layout.autocomplete_list_item));
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,6 +53,22 @@ public class SpotTrain extends android.support.v4.app.Fragment {
             public void onClick(View view) {
                 s1=t1.getText().toString();
                 s2=t2.getText().toString();
+                int len=s1.length();
+                String ans1="",ans2="";
+                for(int i=0;i<len;i++){
+                    if(s1.charAt(i)=='-'){
+                        break;
+                    }
+                    ans1+=s1.charAt(i);
+                }
+                len=s2.length();
+                for(int i=0;i<len;i++){
+                    if(s2.charAt(i)=='-')
+                        break;
+                    ans2+=s2.charAt(i);
+                }
+                s1=ans1;
+                s2=ans2;
                 s3=t4.getText().toString();
                 Log.d("s1",s1);
                 Log.d("s2",s2);

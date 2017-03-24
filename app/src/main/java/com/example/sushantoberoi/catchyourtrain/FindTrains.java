@@ -42,11 +42,11 @@ public class FindTrains extends AppCompatActivity {
             LiveStatus livestatus=gson.fromJson(json,LiveStatus.class);
             String trainnum=livestatus.getTrain_number();
             LiveStatus.CurrentStationBean currstation=livestatus.getCurrent_station();
-            String currst=currstation.getStation();
+            String position=livestatus.getPosition();
             int dist=currstation.getDistance();
             txt.setText("Train Number "+trainnum);
             System.out.println(trainnum);
-            txt2.setText("Current Station "+currst);
+            txt2.setText("Current Station "+position);
             txt3.setText("Distance is "+dist);
         } catch (MalformedURLException e) {
             Toast.makeText(this,"No Internet Connection",Toast.LENGTH_SHORT).show();

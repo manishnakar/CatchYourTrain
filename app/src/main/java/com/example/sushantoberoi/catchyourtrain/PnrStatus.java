@@ -1,7 +1,9 @@
 package com.example.sushantoberoi.catchyourtrain;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
@@ -14,6 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 
@@ -36,7 +46,37 @@ public class PnrStatus extends android.support.v4.app.Fragment implements ImageB
         pnrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // pnr code
+                String data="http://api.railwayapi.com/pnr_status/pnr/"+pnr+"/apikey/mbtervh9/";
+                try {
+                    URL url = new URL(data);
+                    HttpURLConnection ucon=(HttpURLConnection)url.openConnection();
+                    InputStreamReader in =new InputStreamReader(ucon.getInputStream());
+                    BufferedReader br=new BufferedReader(in);
+                    String s;
+                    String json="";
+                    while((s=br.readLine())!=null){
+                        json+=s;
+                    }
+                    Gson gson=new Gson();
+                    PnrStatusJson.PassengersBean obj=new PnrStatusJson.PassengersBean();
+                    String book_status=obj.getBooking_status();
+                    String curr_status=obj.getCurrent_status();
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Your Booking status is: "+book_status+"\n"+"Your current status: "+curr_status);
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
             }
         });
         return v;

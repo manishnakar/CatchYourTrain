@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -24,11 +25,13 @@ public class alarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        Toast.makeText(this,"this is toast",Toast.LENGTH_LONG).show();
         alarmbtn=(Button)findViewById(R.id.alarmbtn);
         date=(EditText)findViewById(R.id.date);
         destStation= (EditText) findViewById(R.id.destStation);
         trainnum=(EditText)findViewById(R.id.trainNum);
         Log.d("hey1","hello1");
+        Log.e("hey1","hello1");
         alarmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,13 +39,15 @@ public class alarm extends AppCompatActivity {
                     @Override
                     public void run() {
                         while(true) {
+                            System.out.println("hello1");
                             Log.d("hey1","hello1");
+                            Log.e("hey1","hello1");
                             String dest = destStation.getText().toString();
                             String dateofjourney = date.getText().toString();
                             String num = trainnum.getText().toString();
                             String data = "http://api.railwayapi.com/live/train/" + num + "/doj/" + dateofjourney + "/apikey/mbtervh9/";
-
                             try {
+                                System.out.println("hello");
                                 URL url = new URL(data);
                                 HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
                                 InputStreamReader in = new InputStreamReader(ucon.getInputStream());
@@ -52,10 +57,11 @@ public class alarm extends AppCompatActivity {
                                 while ((s = br.readLine()) != null) {
                                     json += s;
                                 }
+                                Log.e("hey1","hello1");
                                 Gson gson = new Gson();
                                 LiveStatus livestatus = gson.fromJson(json, LiveStatus.class);
-                                LiveStatus.CurrentStationBean currstation = livestatus.getCurrent_station();
-                                String currst = currstation.getStation();
+                                LiveStatus.CurrentStationBean obj=new LiveStatus.CurrentStationBean();
+                                String currst=obj.getStation_().getName();
                                 if(currst.equals(dest)){
                                     MediaPlayer mp = MediaPlayer.create(alarm.this, R.raw.emergency_alert);
                                     mp.start();
