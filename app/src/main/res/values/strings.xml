@@ -11,6 +11,6 @@
     <string-array name="items">
         <item>Save Contacts</item>
         <item>Send Location</item>
-        <item>Camera</item>
+        <item>Send photo</item>
     </string-array>
 </resources>

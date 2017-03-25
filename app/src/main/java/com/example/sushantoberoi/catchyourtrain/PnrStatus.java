@@ -46,35 +46,42 @@ public class PnrStatus extends android.support.v4.app.Fragment implements ImageB
         pnrbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String data="http://api.railwayapi.com/pnr_status/pnr/"+pnr+"/apikey/mbtervh9/";
                 try {
-                    URL url = new URL(data);
-                    HttpURLConnection ucon=(HttpURLConnection)url.openConnection();
-                    InputStreamReader in =new InputStreamReader(ucon.getInputStream());
-                    BufferedReader br=new BufferedReader(in);
-                    String s;
-                    String json="";
-                    while((s=br.readLine())!=null){
-                        json+=s;
+                String p=pnr.getText().toString();
+                    if(p.isEmpty() || p==null){
+                        Toast.makeText(getContext(), "Kindly fill all fields", Toast.LENGTH_LONG).show();
                     }
-                    Gson gson=new Gson();
-                    PnrStatusJson.PassengersBean obj=new PnrStatusJson.PassengersBean();
-                    String book_status=obj.getBooking_status();
-                    String curr_status=obj.getCurrent_status();
-                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Your Booking status is: "+book_status+"\n"+"Your current status: "+curr_status);
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
+                    else {
+                        String data = "http://api.railwayapi.com/pnr_status/pnr/" + p + "/apikey/" + MainActivity.KEY + "/";
+
+                        URL url = new URL(data);
+                        HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
+                        InputStreamReader in = new InputStreamReader(ucon.getInputStream());
+                        BufferedReader br = new BufferedReader(in);
+                        String s;
+                        String json = "";
+                        while ((s = br.readLine()) != null) {
+                            json += s;
+                        }
+                        Gson gson = new Gson();
+                        PnrStatusJson.PassengersBean obj = new PnrStatusJson.PassengersBean();
+                        String book_status = obj.getBooking_status();
+                        String curr_status = obj.getCurrent_status();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        alertDialog.setTitle("Alert");
+                        alertDialog.setMessage("Your Booking status is: " + book_status + "\n" + "Your current status: " + curr_status);
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                        alertDialog.show();
+                    }
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"Fill all details "+e,Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getActivity(),"Fill all details "+e,Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -104,9 +111,23 @@ public class PnrStatus extends android.support.v4.app.Fragment implements ImageB
                     Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putCharSequence("pnr",pnr.getText().toString());
+    }
+/*
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        pnr.setText(""+savedInstanceState.getCharSequence("pnr"));
+    }
+*/
     /**
      * Receiving speech input
      * */
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

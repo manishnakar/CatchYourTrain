@@ -16,6 +16,7 @@
             android:id="@+id/pnr"
             android:padding="10dp"
             android:background="@drawable/border"
+            android:inputType="number"
             android:hint="Enter Pnr Number"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"

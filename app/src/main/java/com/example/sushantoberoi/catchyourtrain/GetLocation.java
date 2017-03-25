@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +27,8 @@ public class GetLocation extends Activity {
     LocationListener locationListener;
     LocationManager locationManager;
     String abc="";
+
+
     public void getAddress(){
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationListener = new LocationListener() {

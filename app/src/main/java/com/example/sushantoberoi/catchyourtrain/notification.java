@@ -4,12 +4,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +18,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 public class notification extends AppCompatActivity {
     Button alarmbtn;
@@ -35,6 +33,7 @@ public class notification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+        getSupportActionBar().setTitle("Get Notifications");
         time=(EditText)findViewById(R.id.time);
         builder =
                 new NotificationCompat.Builder(this);
@@ -44,8 +43,6 @@ public class notification extends AppCompatActivity {
         date=(EditText)findViewById(R.id.date);
         destStation= (EditText) findViewById(R.id.destStation);
         trainnum=(EditText)findViewById(R.id.trainNum);
-        Log.d("hey1","hello1");
-        Log.e("hey1","hello1");
         alarmbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,7 +66,7 @@ public class notification extends AppCompatActivity {
                     }
                 }).start();
 
-                new Thread(new Runnable() {
+               /* new Thread(new Runnable() {
                     @Override
                     public void run() {
                     String dest = destStation.getText().toString();
@@ -107,7 +104,7 @@ public class notification extends AppCompatActivity {
                             }
                         }
                     }
-                }).start();
+                }).start();*/
             }
         });
     }
@@ -123,6 +120,7 @@ public class notification extends AppCompatActivity {
             json += s;
         }
         Gson gson = new Gson();
+        String dest=destStation.getText().toString();
         LiveStatus livestatus = gson.fromJson(json, LiveStatus.class);
         String position = livestatus.getPosition();
         builder.setSmallIcon(R.drawable.notification);
@@ -147,19 +145,22 @@ public class notification extends AppCompatActivity {
                 else
                     ans2 += position.charAt(j);
             }
+            List<LiveStatus.RouteBean> route= livestatus.getRoute();
+            int count=route.size();
+            System.out.println(count);
+            String dist="";
+            for(int i=0;i<count;i++){
+                if(route.get(i).getStation_().getCode().equalsIgnoreCase(dest)){
+                    dist=route.get(i).getActarr();
+                    break;
+                }
+            }
+            System.out.println(dist);
             String[] events = new String[4];
             events[0] = new String(ans2);
             events[1] = new String(ans1);
-            events[2] = new String("Distance is: " + new LiveStatus.CurrentStationBean().getDistance() + " km(s)");
-            String ans = "";
-            if ((new LiveStatus.CurrentStationBean().getActarr()) == null) {
-                ans = "Train has not started yet!!";
-            } else
-                ans = new LiveStatus.CurrentStationBean().getActarr();
-            if (ans != null)
-                events[3] = new String("Actual Arrival time is: " + ans);
-            else
-                events[3] = new String(ans);
+            events[2]=new String("Actual Arrival For Your Station time is: "+dist);
+            //events[3]=new String("Status is: "+new LiveStatus.CurrentStationBean().getStatus());
             // Sets a title for the Inbox style big view
             inboxStyle.setBigContentTitle("Running Status");
 
@@ -183,23 +184,6 @@ public class notification extends AppCompatActivity {
 
    /* notificationID allows you to update the notification later on. */
             mNotificationManager.notify(uniqueID, builder.build());
-   /* Creates an explicit intent for an Activity in your app */
-        /*Intent resultIntent = new Intent(this, NotificationView.class);
-
-        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addParentStack(NotificationView.class);
-
-   /* Adds the Intent that starts the Activity to the top of the stack */
-      /*  stackBuilder.addNextIntent(resultIntent);
-        PendingIntent resultPendingIntent =stackBuilder.getPendingIntent(0,PendingIntent.FLAG_UPDATE_CURRENT);
-        Intent notificationIntent = new Intent(this, MainActivity.class);
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
-
-        // Add as notification
-        NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(uniqueID, builder.build());*/
         }
     }
 }

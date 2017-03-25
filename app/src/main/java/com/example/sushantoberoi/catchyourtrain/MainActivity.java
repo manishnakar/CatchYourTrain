@@ -2,26 +2,33 @@ package com.example.sushantoberoi.catchyourtrain;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity  {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+    static String KEY="oq20dpoo";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -36,9 +43,11 @@ public class MainActivity extends AppCompatActivity  {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    public boolean isFabOpen = false;
     DrawerLayout drawerlayout;
     ActionBarDrawerToggle button;
-    FloatingActionButton fab;
+    FloatingActionButton fab,fab1,fab2;
+    private Animation fab_open,fab_close,rotate_forward,rotate_backward;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,16 +59,16 @@ public class MainActivity extends AppCompatActivity  {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         // Set up the ViewPager with the sections adapter.
-        fab= (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i =new Intent(MainActivity.this,alarm.class);
-                Log.d("tag1","hello intent");
-                Log.e("hey1","hello1");
-                startActivity(i);
-            }
-        });
+        fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab1 = (FloatingActionButton)findViewById(R.id.fab1);
+        fab2 = (FloatingActionButton)findViewById(R.id.fab2);
+        fab_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        fab_close = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
+        rotate_forward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_backward);
+        fab.setOnClickListener(this);
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -72,6 +81,9 @@ public class MainActivity extends AppCompatActivity  {
         button=new ActionBarDrawerToggle(this,drawerlayout,toolbar,R.string.open,R.string.close);
         drawerlayout.addDrawerListener(button);
         button.syncState();
+
+        NavigationView navigationView= (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -83,6 +95,11 @@ public class MainActivity extends AppCompatActivity  {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -91,15 +108,89 @@ public class MainActivity extends AppCompatActivity  {
         if(button.onOptionsItemSelected(item))
             return true;
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.notify) {
+            try {
+                Intent i = new Intent(MainActivity.this, notification.class);
+                startActivity(i);
+            }
+            catch(Exception e){
+                Toast.makeText(getApplicationContext(),""+e,Toast.LENGTH_LONG).show();
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onKeyLongPress(int keyCode, KeyEvent event) {
+        isFabOpen=true;
+        animateFAB();
+        return super.onKeyLongPress(keyCode, event);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id=item.getItemId();
+        if(id==R.id.AboutUS){
+            Intent i =new Intent(this,AboutUs.class);
+            startActivity(i);
+        }
+        else if(id==R.id.Save_Contacts)
+        {
+            Intent i =new Intent(this,SaveContacts.class);
+            startActivity(i);
+        }
+        else if(id==R.id.Nav_back)
+        {
+            finish();
+            System.exit(0);
+        }
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        int id = view.getId();
+        switch (id){
+            case R.id.fab:
+                animateFAB();
+                break;
+            case R.id.fab1:
+                Intent i=new Intent(this,notification.class);
+                startActivity(i);
+                break;
+            case R.id.fab2:
+                Intent j=new Intent(this,Alarm.class);
+                startActivity(j);
+                break;
+        }
+    }
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+
+            fab.startAnimation(rotate_backward);
+            fab1.startAnimation(fab_close);
+            fab2.startAnimation(fab_close);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = false;
+
+        } else {
+
+            fab.startAnimation(rotate_forward);
+            fab1.startAnimation(fab_open);
+            fab2.startAnimation(fab_open);
+            fab1.setClickable(true);
+            fab2.setClickable(true);
+            isFabOpen = true;
 
 
+        }
+    }
     /**
      * A placeholder fragment containing a simple view.
      */

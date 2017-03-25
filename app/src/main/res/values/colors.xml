@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="light_blue">#aa7ea0e4</color>
     <color name="more_light_blue">#aad3e0fc</color>
+    <color name="colorFAB1">#2196F3</color>
+    <color name="colorFAB2">#E040FB</color>
 </resources>

@@ -4,16 +4,24 @@
 
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_MMS"/>
+    <uses-permission android:name="android.permission.RECEIVE_MMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.camera.front"
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.hardware.location.gps"/>
+    <uses-feature
+        android:name="android.hardware.camera.front"
         android:required="false" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/train"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -27,11 +35,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:name=".Mote" />
+
         <activity android:name=".SaveContacts" />
         <activity android:name=".FindTrains" />
         <activity android:name=".TrainsBwStation" />
-        <activity android:name=".alarm" />
-        <activity android:name=".TakeAutoPicture"></activity>
+        <activity android:name=".notification" />
+        <activity android:name=".TakeAutoPicture" />
+        <activity android:name=".Alarm" />
+        <activity android:name=".AboutUs" />
+        <activity android:name=".Mote" />
+        <activity android:name=".StopAlarm"></activity>
     </application>
 
 </manifest>

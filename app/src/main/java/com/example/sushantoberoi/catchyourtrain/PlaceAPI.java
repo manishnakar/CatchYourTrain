@@ -18,7 +18,7 @@ public class PlaceAPI {
 
     private static final String TAG = PlaceAPI.class.getSimpleName();
     String s1="http://api.railwayapi.com/suggest_station/name/";
-    String s2="/apikey/4gz6hloy/";
+    String s2="/apikey/"+MainActivity.KEY+"/";
 
     public ArrayList<String> autocomplete (String input) {
         ArrayList<String> resultList = null;

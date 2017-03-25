@@ -17,6 +17,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="35dp"
         android:id="@+id/textView"
+
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -24,6 +25,7 @@
     <EditText
         android:layout_width="match_parent"
         android:hint="Enter Name"
+        android:inputType="text"
         android:layout_height="35dp"
         android:layout_marginTop="15dp"
         android:id="@+id/txt1"
@@ -40,6 +42,7 @@
         android:padding="5dp"
         android:shadowColor="@color/colorPrimaryDark"
         android:layout_height="35dp"
+        android:inputType="phone"
         android:hint="Enter Contact Number"
         android:layout_marginTop="15dp"
         android:id="@+id/txt2"
@@ -52,6 +55,7 @@
         android:text="  Save Contact  "
         android:background="@drawable/roundedcorners"
         android:bottomLeftRadius="10dp"
+        android:layout_marginLeft="0dp"
         android:bottomRightRadius="10dp"
         android:padding="10dp"
         android:topLeftRadius="10dp"
@@ -60,8 +64,24 @@
         android:layout_marginTop="15dp"
         android:id="@+id/btn"
         android:layout_below="@+id/txt2"
-        android:layout_centerHorizontal="true" />
-
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="  Delete Contact  "
+        android:background="@drawable/roundedcorners"
+        android:bottomLeftRadius="10dp"
+        android:layout_marginLeft="0dp"
+        android:bottomRightRadius="10dp"
+        android:padding="10dp"
+        android:topLeftRadius="10dp"
+        android:textColor="#cfc"
+        android:topRightRadius="10dp"
+        android:layout_marginTop="15dp"
+        android:id="@+id/del"
+        android:layout_below="@+id/txt2"
+        />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

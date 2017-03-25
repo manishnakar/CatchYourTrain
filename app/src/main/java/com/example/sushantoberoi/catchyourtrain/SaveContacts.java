@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 public class SaveContacts extends AppCompatActivity implements  AdapterView.OnItemClickListener {
     ListView lv;
-    Button btn;
+    Button btn,del;
     String query,name,con;
     EditText t1,t2;
     String []array_name;
@@ -23,8 +23,10 @@ public class SaveContacts extends AppCompatActivity implements  AdapterView.OnIt
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("Save Contacts");
         setContentView(R.layout.activity_save_contacts);
         btn=(Button)findViewById(R.id.btn);
+        del=(Button)findViewById(R.id.del);
         t1=(EditText)findViewById(R.id.txt1);
         t2=(EditText)findViewById(R.id.txt2);
         lv= (ListView)findViewById(R.id.listView2);
@@ -42,12 +44,12 @@ public class SaveContacts extends AppCompatActivity implements  AdapterView.OnIt
             while (!c.isAfterLast()) {
                 String s1 = c.getString(c.getColumnIndex("name"));
                 String s2 = c.getString(c.getColumnIndex("contact"));
-                Toast.makeText(this, s1 + " " + s2, Toast.LENGTH_LONG).show();
+//                Toast.makeText(this, s1 + " " + s2, Toast.LENGTH_LONG).show();
                 array_name[k++] = s1 + " " + s2;
                 c.moveToNext();
             }
 
-            Toast.makeText(this, "sss1", Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "sss1", Toast.LENGTH_LONG).show();
             adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, array_name);
             lv.setAdapter(adapter);
         }
@@ -57,12 +59,39 @@ public class SaveContacts extends AppCompatActivity implements  AdapterView.OnIt
             public void onClick(View view) {
                 name=t1.getText().toString();
                 con=t2.getText().toString();
-                SQLiteDatabase data=openOrCreateDatabase("hint",MODE_PRIVATE,null); //nobody other can access
-                //it is stored in our phone only
-                data.execSQL("create table if not exists contacts(name varchar, contact varchar);");
-                data.execSQL("insert into contacts values ('" + name + "','" + con + "');");
+                if(name==null || con==null || name.isEmpty() || con.isEmpty()){
+                    Toast.makeText(getApplication(), "Kindly fill all fields", Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    SQLiteDatabase data = openOrCreateDatabase("hint", MODE_PRIVATE, null); //nobody other can access
+                    //it is stored in our phone only
+                    data.execSQL("create table if not exists contacts(name varchar, contact varchar);");
+                    data.execSQL("insert into contacts values ('" + name + "','" + con + "');");
+                }
                 //adapter.add(""+name+" "+con);
                 }
+        });
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name = t1.getText().toString();
+                con = t2.getText().toString();
+                SQLiteDatabase data = openOrCreateDatabase("hint", MODE_PRIVATE, null); //nobody other can access
+                //it is stored in our phone only
+                data.execSQL("create table if not exists contacts(name varchar, contact varchar);");
+                //String q="select * from contacts where name='"+name+"' and contact='"+con+"'";
+//                String query="delete from contacts where name='"+name+"' and contact='"+con+"'";
+                //data.execSQL(q);
+                //Cursor c = data.rawQuery(q, null);
+               // int cnt = c.getCount();
+                //if (cnt > 0) {
+                  data.delete("contacts","name=? and contact=?",new String[]{name,con});
+                //}
+                /*else{
+                    Toast.makeText(getApplicationContext(),"Contact doesn't exist",Toast.LENGTH_LONG).show();
+                }*/
+            }
         });
     }
 
