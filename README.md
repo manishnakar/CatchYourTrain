@@ -1,19 +1,34 @@
 # CatchYourTrain
-A common App for a common man with uncommon features to get the status of trains and automatically displays status in the notification tray along with a dynaminc alarming feaure to before reaching your destination other innovative features.
---------------------------------------------------------------------------------------------------------------------------
+
+An App for a safe train journey which automatically displays train status in the notification tray along with a dynamic alarm feature before reaching your destination.
+
+<br>
+Youtube Video On how to use the application:
+
+https://www.youtube.com/watch?v=Log70jwF36s
+
+Google Play store Link:
+https://play.google.com/store/apps/details?id=my.androidapp.sushantoberoi.catchyourtrain&hl=en
+
+Screenshots:
+
+
 Some of the implemented features include:
 -------------------------------------------------------------------
+
 Trains between Stations
 Live runnning Status for a train.
+
 Status of the PNR number.
 ---------------------------------------------------------------------------------------------------------------------------------------
-OVerhead features:
+Other features:
 -----------------------------------------------------------------------------------------------------------------------------------------
+
 The App keeps an active notification in the notification tray regarding the live status of the train for a hustle free experience.<br>The User need not to open her app every time to check the status of her train. Just drop down the notification tray and bingo!!! That's it.<br>
 A dynamic alarming technique has been implemented in the app that alarms the user before a user-specified time on reaching the<br> destination station. Sleeping without the fear of getting left off your destination station has never been this easy.<br>
 Another features are regarding the security concerns. Add a few Contacts and You can send your location through texts to those who are<br> concerened about you.Also Images as multimedia messaging can be sent in cases of calamities.<br> 
 ------------------------------------------------------------------------------------------------------------------------------------------
-The UI implemented is very very interactive and everything is readily available. The app have been so developed that it can be used<br> easily even by a fifth graduate and prouctively even by an engineering graduate.
+The UI implemented is very interactive and everything is readily available. The app have been so developed that it can be used<br> easily even by a fifth graduate and prouctively even by an engineering graduate.
 Autocomplete list view, Floating Action Button, Navigation Drawer, Swipe view everything has been made to make it interactive keeping<br><br> the common man in view.
 
 -----------------------------------------------------------------------------------------------------------------------------------------
